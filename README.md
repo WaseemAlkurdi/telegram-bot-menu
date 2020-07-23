@@ -2,6 +2,9 @@
 
 Telegram bot with universal editable menu. With this program, you do not need to write code for the bot with the menu. Just run the bot and configure its menu via Telegram.
 
+**THIS IS A FORK. THE ORIGINAL IS AT:**
+https://github.com/zZoMROT/telegram-bot-menu/
+
 ## Getting Started
 
 1. Create bot with official Telegram robot [@BotFather](http://t.me/BotFather)

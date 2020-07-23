@@ -6,7 +6,7 @@ var MODE = 0;
 		0 - default mode with menu
 		1 - edit mode with expand menu
 */
-var TOKEN = '';
+var TOKEN = '***REMOVED***';
 var DELIMETER = ':::';
 var DATA_FOLDER;
 
