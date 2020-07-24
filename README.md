@@ -7,19 +7,40 @@ https://github.com/zZoMROT/telegram-bot-menu/
 
 ## Getting Started
 
-1. Create bot with official Telegram robot [@BotFather](http://t.me/BotFather)
-2. Set [TOKEN](https://github.com/zZoMROT/telegram-bot-menu/blob/master/init.js#L9) variable in init.js
+1. Use Telegram's official [@BotFather](http://t.me/BotFather) to create a bot token.
+2. Set the bot's [TOKEN](https://github.com/WaseemAlkurdi/telegram-bot-menu/blob/master/init.js#L9) variable in `init.js` to the token that BotFather gives you:
    ```
    var TOKEN = '<YOUR_TOKEN>';
    ```
-3. Make sure that you have installed the utility Sed. This is necessary to configure bot. To work with finished configuration file, this is not necessary.
+3. Install `node` and `npm` if you don't already have them installed:
    ```
-   apt-get install sed
+   sudo apt-get install node npm
    ```
-4. Start program with 
+3. If you want to edit the bot's menu through the bot, make sure that you have `sed` installed.
+   ```
+   sudo apt-get install sed
+   ```
+4. Install the prerequisite modules via the Node.js package manager `npm`:
+   ```
+   npm install --save telegram-bot-api socks5-http-client node-emoji
+   ```
+5. To start the bot: 
+   ```
+   mkdir data
+   node bot.js menu data
+   ```
+   This starts the bot in menu mode. To allow editing, change the command as follows:
+   ```
+   node bot.js menu data edit Username,001122334 
+   ```
+   where `Username` and `001122334` are Telegram usernames or user IDs of accounts that should be allowed edit access to the menu (bot admins). **Make sure there are no spaces after the commas.**
+
+   **Note:** The bot can also be started as follows:
    ```
    node bot.js menu data edit
    ```
+   but this is **strictly not recommended** in a production environment as it will open up the menu to editing by all Telegram users.
+
 
 ## Syntax
 
