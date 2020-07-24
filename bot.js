@@ -299,13 +299,14 @@ function sendActions(bot, msg, _index = 0){
 function printSyntax(message){
 	if(message != undefined)
 		console.log(message);
+	console.log("");
 	console.log("Syntax: node bot.js menu.file data.folder [mode [username|telegram_id|all]]");
 	console.log("\tmenu.file           \t- file with menu catalogs in format:");
 	console.log("\t                    \t  parrent"+init.DELIMETER+"catalog"+init.DELIMETER+"menubutton["+init.DELIMETER+"action]");
 	console.log("\t                    \t  You can set DELIMETER in init.js");
 	console.log("\tdata.folder         \t- path to folder with data for files from menu.file");
-	console.log("\tmode                \t- bot mode: \"edit\" for update menu");
-	console.log("\tusername|telegram_id\t- username or telegram_id users separated by commas which can edit menu");
-	console.log("\t                    \t  if mode=edit without this parameter, all users can edit menu");
-	console.log("\t                    \t  You can use \"all\" to all users can edit menu");
+	console.log("\tmode                \t- Sets the bot mode: \"edit\" to update menu");
+	console.log("\tusername|telegram_id\t- Username or a comma-separated list of admins' telegram_id numbers who should be allowed to edit the menu");
+	console.log("\t                    \t  If mode=edit without this parameter, all users can edit menu");
+	console.log("\t                    \t  You can use \"all\" to all Telegram users can edit the menu (unsafe!)");
 }

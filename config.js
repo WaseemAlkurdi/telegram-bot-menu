@@ -3,7 +3,7 @@ var bot = module.parent.exports;
 function loadConfigurationFile(filename = process.argv[2]){
 	return new Promise(function(ok, fail){
 		if(filename == undefined){
-			fail("No configuration file");
+			fail("Configuration file not specified.");
 		} else {
 			bot.fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
 			    if (err){

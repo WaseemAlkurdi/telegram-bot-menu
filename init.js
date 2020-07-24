@@ -22,8 +22,8 @@ var proxy = {
 	'password': ''
 }
 
-var MSG_START 			= "Use menu";
-var MSG_DEFAULT 		= "Click to button";
+var MSG_START 			= "Welcome! This is the start message.";
+var MSG_DEFAULT 		= "This is the default message.";
 var MSG_BACK			= function(key){ return "Back to " + key }
 var MSG_DELETE_ITEM 	= function(catalog, name){ return "Item " + name + " was deleted from " + catalog }
 var MSG_DELETE_FAIL 	= function(catalog, name, error){ return "When item " + name + " from " + catalog + " deleted there was an error: " + error }
