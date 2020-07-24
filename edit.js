@@ -80,7 +80,7 @@ function saveActions(from_id){
 		}
 
 		config = config.replace("'", "\\'");
-		var sed = "sed -i \"\" 's/\\(.*" + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].catalog + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].menu_item + "\\).*/\\1" + config + "/g' " + process.argv[2];
+		var sed = "sed 's/\\(.*" + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].catalog + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].menu_item + "\\).*/\\1" + config + "/g' " + process.argv[2] + " > " + process.argv[2] + "_edited.tmp && mv " + process.argv[2] +"_edited.tmp " + process.argv[2];
 		bot.exec(sed, function(error, out, err){
 			if(error != null)
 				fail(error.toString());
