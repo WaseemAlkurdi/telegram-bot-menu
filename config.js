@@ -110,6 +110,77 @@ function checkEmptyStringInConfig(str, filename){
 	});
 }
 
+// This function checks the sanity of the parameter=value pairs that were
+// specified on the command line. This is done to account for things
+// like parameter= (without a value), a sole = sign (no parameter or value)
+// , or =value (without a parameter).
+function checkCommandlinePairSanity(){
+	return new Promise(function(ok, fail){
+		var hits = [];
+		for(var i = 0; i < process.argv.length; i++){
+				// is the parameter a lone equal sign, and does it have an equal sign?
+				if (process.argv[i] != "=" && process.argv[i].indexOf("=") != -1){
+					// if it does:
+					// the parameter is the part before the equals sign ...
+					var parameter = process.argv[i].split("=")[0];
+					if (parameter == "") {
+						hits[i] = "Parameter without a value: " + process.argv[i]
+					}
+					// ... while the value is the part after it.
+					var value = process.argv[i].split("=")[1];
+					if (value == ""){
+						hits[i] = "Value without a parameter: " + process.argv[i]
+					}
+				} else if (process.argv[i] == "="){
+					hits[i] = "Lone = sign"
+				}
+			}
+			if (hits.length > 0) {
+				fail(hits);
+			} else {
+				ok();
+			}
+	});
+		return hits;
+}
+
+module.exports.checkCommandlinePairSanity = checkCommandlinePairSanity;
+
+// This function gets the value associated with a parameter that was specified
+// on the command line.
+function getCommandlineParameterValue(requestedParameter){
+	for(var i = 0; i < process.argv.length; i++){
+		/*if (process.argv[i].indexOf("--") != -1){
+			console.log("GNU-style argument detected!")
+		}*/
+		var parameter = process.argv[i].split("=")[0];
+		var value = process.argv[i].split("=")[1];
+		if (parameter == requestedParameter && value != "" && value != undefined) {
+			return value;
+		}
+	}
+}
+
+function loadCustomizationFile(){
+	return new Promise(function(ok,fail){
+		var value = getCommandlineParameterValue("cust_file");
+		if (value == undefined){
+				console.log("Customization file is not specified. Falling back on hardcoded values.");
+				ok();
+			} else if (value == ""){
+				fail("Please specify a file path after the equals sign in cust_file= .");
+			} else if (value != undefined) {
+				console.log("Customization file specified!", value);
+				ok();
+			} else {
+				console.log("here!");
+				ok();
+			}
+	});
+}
+module.exports.loadCustomizationFile = loadCustomizationFile;
+
+
 function getDataFolder(){
 	return new Promise(function(ok, fail){
 		if(process.argv[3] == undefined)

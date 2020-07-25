@@ -19,19 +19,32 @@ module.exports.init = init;
 module.exports.config = config;
 module.exports.edit = edit;
 
-config.loadConfigurationFile().then(() => {
-	config.getDataFolder().then(() => {
-		config.checkMode().then(() => {
-			start_bot();
+config.checkCommandlinePairSanity().then(() => {
+	config.loadConfigurationFile().then(() => {
+		config.getDataFolder().then(() => {
+		config.loadCustomizationFile().then(() => {
+			config.checkMode().then(() => {
+				start_bot();
+				}, error => {
+					printSyntax(error);
+				});
+			}, error => {printSyntax(error);});
 		}, error => {
-			printSyntax(error);
-		}); 
+			printSyntax(error);	
+		});
 	}, error => {
-		printSyntax(error);	
+		printSyntax(error);
 	});
-}, error => {
-	printSyntax(error);
+}, hits => {
+	console.log("We've detected errors in your positional arguments:")
+		for (var j=0 ; j<hits.length ;j++){
+			if (hits[j] != undefined) {
+			console.log(hits[j]);
+		}
+	}
+	console.log("Please fix or remove these arguments and try again.");
 });
+
 
 function start_bot(){
 	var bot = new TelegramBot(init.TOKEN, {
