@@ -24,7 +24,7 @@ function generateNewFile(impex, telegram, filename, msg){
 			for(var ii = 0; ii < bot.init.menu[keys[i]].values.length; ii++){
 				count_loops++;
 				var item = bot.init.menu[keys[i]].values[ii];
-				var config = bot.init.menu[keys[i]].parrent + bot.init.DELIMETER + keys[i] + bot.init.DELIMETER + item;	
+				var config = bot.init.menu[keys[i]].parent + bot.init.DELIMETER + keys[i] + bot.init.DELIMETER + item;	
 				
 				indexActions(impex, telegram, config, item, bot.init.menu[item].actions, msg).then(new_config => {
 					bot.exec("echo \"" + new_config.replace(/"/g, "\\\"") + "\" >> " + filename + "\n", function(error, out, err){

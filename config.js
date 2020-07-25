@@ -22,14 +22,14 @@ function loadConfigurationFile(filename = process.argv[2]){
 
 				        	/* initialize menu */
 							if(bot.init.menu[param[1]] == undefined)
-								bot.init.menu[param[1]] = { 'values': [], 'parrent': null, 'actions': [] };
+								bot.init.menu[param[1]] = { 'values': [], 'parent': null, 'actions': [] };
 
 							bot.init.menu[param[1]].values.push(param[2]);
-							bot.init.menu[param[1]].parrent = param[0];
+							bot.init.menu[param[1]].parent = param[0];
 
 							/* initialize actions in menu */
 							if(bot.init.menu[param[2]] == undefined)
-								bot.init.menu[param[2]] = { 'values': [], 'parrent': param[1], 'actions': [] };
+								bot.init.menu[param[2]] = { 'values': [], 'parent': param[1], 'actions': [] };
 							
 							if(param.length > 3){
 								for(var j = 3; j < param.length; j++){
@@ -69,7 +69,7 @@ function loadConfigurationFile(filename = process.argv[2]){
 
 				        	bot.init.buttons[param[0]][flagKey][param[1]].push(param[2]);
 
-				        	/* check root parrent */
+				        	/* check root parent */
 				        	if(param[0] == "root"){
 				        		hasRoot = 1;
 				        		bot.init.menu_root = param[1];
@@ -78,7 +78,7 @@ function loadConfigurationFile(filename = process.argv[2]){
 					}
 
 					if(!hasRoot)
-						fail("No root catalog in menu at parrent position");
+						fail("No root catalog in menu at parent position");
 
 					checkEmptyStringInConfig(last_string, filename).then(() => {
 						ok();

@@ -34,7 +34,7 @@ var MSG_EDIT_FAIL 		= function(name, error){ return "When item " + name + " edit
 var MSG_DESYNC			= "Desync bot and menu.file, restart the bot";
 var MSG_EDIT_OFF 		= "Mode edit is off";
 var MSG_ADD_ITEM_REQ	= "Input new item name";
-var MSH_NO_CATALOG		= "WARNING! No parrent catalog, error in code"; // see: edit.js -> addItem()
+var MSH_NO_CATALOG		= "WARNING! No parent catalog, error in code"; // see: edit.js -> addItem()
 var MSG_ADD_ACTION_REQ	= "Input all actions and click to button \"Save\"";
 var MSG_EDIT_ITEM_CANC	= "Editing canceled";
 
@@ -65,8 +65,8 @@ var BUTTON = function(key, _mode){
 		btns.push(btns_in_line);
 	}
 	if(key != bot.init.menu_root){
-		var btns_in_line = [{ text: bot.emoji.get('arrow_left') + " " + menu[key].parrent }];
-		if(menu[key].parrent != bot.init.menu_root)
+		var btns_in_line = [{ text: bot.emoji.get('arrow_left') + " " + menu[key].parent }];
+		if(menu[key].parent != bot.init.menu_root)
 			btns_in_line.push({ text: bot.emoji.get('arrow_left') + " " + bot.init.menu_root });
 
 		btns.push(btns_in_line);

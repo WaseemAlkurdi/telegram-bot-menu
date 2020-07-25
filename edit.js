@@ -33,11 +33,11 @@ function addItem(from_id, item){
 
 		// add to menu array
 		bot.init.menu[p_c.catalog].values.push(item);
-		bot.init.menu[item] = { 'values': [], 'parrent': p_c.catalog, 'actions': [] };
+		bot.init.menu[item] = { 'values': [], 'parent': p_c.catalog, 'actions': [] };
 
 		// console.log(p_c, item);
 		// add to menu.file 
-		var condition = p_c.parrent + bot.init.DELIMETER + p_c.catalog + bot.init.DELIMETER + item;
+		var condition = p_c.parent + bot.init.DELIMETER + p_c.catalog + bot.init.DELIMETER + item;
 		var sed = "echo " + condition + " >> " + process.argv[2];
 		bot.exec(sed, function(error, out, err){
 			if(error != null)

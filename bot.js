@@ -185,7 +185,7 @@ function start_bot(){
 			if(checkAdmins(msg.from) != 1)
 				message = init.MSG_EDIT_OFF;
 			else
-				edit.set_variable('add_item', msg.from.id, { 'catalog': key, 'parrent': init.menu[key].parrent });
+				edit.set_variable('add_item', msg.from.id, { 'catalog': key, 'parent': init.menu[key].parent });
 
 			bot.sendMessage(msg.from.id, message, init.options(key, checkAdmins(msg.from)));
 			return edit.reset_variables(msg.from.id, 'add_item');
@@ -315,7 +315,7 @@ function printSyntax(message){
 	console.log("");
 	console.log("Syntax: node bot.js menu.file data.folder [mode [username|telegram_id|all]]");
 	console.log("\tmenu.file           \t- file with menu catalogs in format:");
-	console.log("\t                    \t  parrent"+init.DELIMETER+"catalog"+init.DELIMETER+"menubutton["+init.DELIMETER+"action]");
+	console.log("\t                    \t  parent"+init.DELIMETER+"catalog"+init.DELIMETER+"menubutton["+init.DELIMETER+"action]");
 	console.log("\t                    \t  You can set DELIMETER in init.js");
 	console.log("\tdata.folder         \t- path to folder with data for files from menu.file");
 	console.log("\tmode                \t- Sets the bot mode: \"edit\" to update menu");
