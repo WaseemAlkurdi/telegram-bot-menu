@@ -24,7 +24,7 @@ function generateNewFile(impex, telegram, filename, msg){
 			for(var ii = 0; ii < bot.init.menu[keys[i]].values.length; ii++){
 				count_loops++;
 				var item = bot.init.menu[keys[i]].values[ii];
-				var config = bot.init.menu[keys[i]].parent + bot.init.DELIMETER + keys[i] + bot.init.DELIMETER + item;	
+				var config = bot.init.menu[keys[i]].parent + bot.init.DELIMITER + keys[i] + bot.init.DELIMITER + item;	
 				
 				indexActions(impex, telegram, config, item, bot.init.menu[item].actions, msg).then(new_config => {
 					bot.exec("echo \"" + new_config.replace(/"/g, "\\\"") + "\" >> " + filename + "\n", function(error, out, err){
@@ -66,7 +66,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 			if(impex == IMPEX_EXPORT){
 				telegram.downloadFile(impex_action.value, bot.init.DATA_FOLDER).then(file => {
 					impex_action.value = file;
-					config += bot.init.DELIMETER + JSON.stringify(impex_action);
+					config += bot.init.DELIMITER + JSON.stringify(impex_action);
 					indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 						ok(new_config);
 					}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -78,7 +78,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 				if(impex_action.type == "voice"){
 					telegram.sendVoice(msg.from.id, impex_action.value).then(data => {
 						impex_action.value = data.voice.file_id;
-						config += bot.init.DELIMETER + JSON.stringify(impex_action);
+						config += bot.init.DELIMITER + JSON.stringify(impex_action);
 						indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 							ok(new_config);
 						}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -88,7 +88,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 				if(impex_action.type == "sticker"){
 					telegram.sendSticker(msg.from.id, impex_action.value).then(data => {
 						impex_action.value = data.sticker.file_id;
-						config += bot.init.DELIMETER + JSON.stringify(impex_action);
+						config += bot.init.DELIMITER + JSON.stringify(impex_action);
 						indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 							ok(new_config);
 						}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -98,7 +98,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 				if(impex_action.type == "photo"){
 					telegram.sendPhoto(msg.from.id, impex_action.value).then(data => {
 						impex_action.value = data.photo[data.photo.length-1].file_id;
-						config += bot.init.DELIMETER + JSON.stringify(impex_action);
+						config += bot.init.DELIMITER + JSON.stringify(impex_action);
 						indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 							ok(new_config);
 						}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -108,7 +108,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 				if(impex_action.type == "video"){
 					telegram.sendVideo(msg.from.id, impex_action.value).then(data => {
 						impex_action.value = data.video.file_id;
-						config += bot.init.DELIMETER + JSON.stringify(impex_action);
+						config += bot.init.DELIMITER + JSON.stringify(impex_action);
 						indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 							ok(new_config);
 						}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -118,7 +118,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 				if(impex_action.type == "document"){
 					telegram.sendDocument(msg.from.id, impex_action.value).then(data => {
 						impex_action.value = data.document.file_id;
-						config += bot.init.DELIMETER + JSON.stringify(impex_action);
+						config += bot.init.DELIMITER + JSON.stringify(impex_action);
 						indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 							ok(new_config);
 						}, error => { fail({'item':error.item, 'msg':error.msg}) });
@@ -129,7 +129,7 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 			return;
 		}
 
-		config += bot.init.DELIMETER + JSON.stringify(impex_action);
+		config += bot.init.DELIMITER + JSON.stringify(impex_action);
 		indexActions(impex, telegram, config, item, actions, msg, index+1).then(new_config => {
 			ok(new_config);
 		}, error => { fail({'item':error.item, 'msg':error.msg}) });

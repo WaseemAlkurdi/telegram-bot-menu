@@ -315,8 +315,8 @@ function printSyntax(message){
 	console.log("");
 	console.log("Syntax: node bot.js menu.file data.folder [mode [username|telegram_id|all]]");
 	console.log("\tmenu.file           \t- file with menu catalogs in format:");
-	console.log("\t                    \t  parent"+init.DELIMETER+"catalog"+init.DELIMETER+"menubutton["+init.DELIMETER+"action]");
-	console.log("\t                    \t  You can set DELIMETER in init.js");
+	console.log("\t                    \t  parent"+init.DELIMITER+"catalog"+init.DELIMITER+"menubutton["+init.DELIMITER+"action]");
+	console.log("\t                    \t  You can set DELIMITER in init.js");
 	console.log("\tdata.folder         \t- path to folder with data for files from menu.file");
 	console.log("\tmode                \t- Sets the bot mode: \"edit\" to update menu");
 	console.log("\tusername|telegram_id\t- Username or a comma-separated list of admins' telegram_id numbers who should be allowed to edit the menu");

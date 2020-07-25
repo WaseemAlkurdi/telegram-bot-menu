@@ -16,7 +16,7 @@ function loadConfigurationFile(filename = process.argv[2]){
 			        for(var i = 0; i < config_params.length; i++){
 			        	last_string = config_params[i];
 			        	if(config_params[i] != ""){
-				        	var param = config_params[i].split(bot.init.DELIMETER);
+				        	var param = config_params[i].split(bot.init.DELIMITER);
 				        	if(param.length < 3)
 				        		fail("Incorrect configuration file");
 

@@ -10,7 +10,7 @@ function deleteItem(key, item, index){
 		bot.init.menu[key].values.splice(index-1, 1);
 		
 		// delete from menu.file
-		var condition = key + bot.init.DELIMETER + item;
+		var condition = key + bot.init.DELIMITER + item;
 		var sed = "sed -i '/.*" + condition + ".*/d' " + process.argv[2];
 		bot.exec(sed, function(error, out, err){
 			if(error != null)
@@ -37,7 +37,7 @@ function addItem(from_id, item){
 
 		// console.log(p_c, item);
 		// add to menu.file 
-		var condition = p_c.parent + bot.init.DELIMETER + p_c.catalog + bot.init.DELIMETER + item;
+		var condition = p_c.parent + bot.init.DELIMITER + p_c.catalog + bot.init.DELIMITER + item;
 		var sed = "echo " + condition + " >> " + process.argv[2];
 		bot.exec(sed, function(error, out, err){
 			if(error != null)
@@ -76,11 +76,11 @@ function saveActions(from_id){
 			var i_action = Object.assign({}, edit_actions['add_actions']["userid"+from_id].actions[i]);
 			i_action.value = i_action.value.replace("\"", "\\\"");
 			i_action.value = i_action.value.replace("\n", "\\n");
-			config += bot.init.DELIMETER + JSON.stringify(i_action);
+			config += bot.init.DELIMITER + JSON.stringify(i_action);
 		}
 
 		config = config.replace("'", "\\'");
-		var sed = "sed 's/\\(.*" + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].catalog + bot.init.DELIMETER + edit_actions['add_actions']["userid"+from_id].menu_item + "\\).*/\\1" + config + "/g' " + process.argv[2] + " > " + process.argv[2] + "_edited.tmp && mv " + process.argv[2] +"_edited.tmp " + process.argv[2];
+		var sed = "sed 's/\\(.*" + bot.init.DELIMITER + edit_actions['add_actions']["userid"+from_id].catalog + bot.init.DELIMITER + edit_actions['add_actions']["userid"+from_id].menu_item + "\\).*/\\1" + config + "/g' " + process.argv[2] + " > " + process.argv[2] + "_edited.tmp && mv " + process.argv[2] +"_edited.tmp " + process.argv[2];
 		bot.exec(sed, function(error, out, err){
 			if(error != null)
 				fail(error.toString());

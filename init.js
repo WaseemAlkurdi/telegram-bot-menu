@@ -7,7 +7,7 @@ var MODE = 0;
 		1 - edit mode with expand menu
 */
 var TOKEN = '***REMOVED***';
-var DELIMETER = ':::';
+var DELIMITER = ':::';
 var DATA_FOLDER;
 
 var buttons = {};
@@ -105,7 +105,7 @@ var options_with_save = function(key, _mode, from_id) {
 /* ----------- EXPORT ----------- */
 module.exports.MODE = MODE;
 module.exports.TOKEN = TOKEN;
-module.exports.DELIMETER = DELIMETER;
+module.exports.DELIMITER = DELIMITER;
 module.exports.DATA_FOLDER = DATA_FOLDER;
 
 module.exports.buttons = buttons;
