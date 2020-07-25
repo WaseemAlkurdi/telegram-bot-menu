@@ -161,17 +161,27 @@ function getCommandlineParameterValue(requestedParameter){
 	}
 }
 
+// This function loads what I called the "customization file". This file
+// would allow the user to change the delimiter, default prompts, and so
+// forth, as zZoMROT envisaged in their original "to-do" list.
 function loadCustomizationFile(){
 	return new Promise(function(ok,fail){
-		var value = getCommandlineParameterValue("cust_file");
-		if (value == undefined){
+		var filename = getCommandlineParameterValue("cust_file");
+		if (filename == undefined){
 				console.log("Customization file is not specified. Falling back on hardcoded values.");
 				ok();
-			} else if (value == ""){
+			} else if (filename == ""){
 				fail("Please specify a file path after the equals sign in cust_file= .");
-			} else if (value != undefined) {
-				console.log("Customization file specified!", value);
-				ok();
+			} else if (filename != undefined) {
+				console.log("Customization file specified!", filename);
+				bot.fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
+					if (err){
+					fail(err.toString());
+			    }
+				}, error => {
+					fail(error);
+				});
+			ok();
 			} else {
 				console.log("here!");
 				ok();
