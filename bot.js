@@ -313,7 +313,7 @@ function printSyntax(message){
 	if(message != undefined)
 		console.log(message);
 	console.log("");
-	console.log("Syntax: node bot.js menu.file data.folder [mode [username|telegram_id|all]]");
+	console.log("Syntax: node bot.js menu.file data.folder [mode [username|telegram_id|all]] [cust_file=customize.file]");
 	console.log("\tmenu.file           \t- file with menu catalogs in format:");
 	console.log("\t                    \t  parent"+init.DELIMITER+"catalog"+init.DELIMITER+"menubutton["+init.DELIMITER+"action]");
 	console.log("\t                    \t  You can set DELIMITER in init.js");
@@ -322,4 +322,6 @@ function printSyntax(message){
 	console.log("\tusername|telegram_id\t- Username or a comma-separated list of admins' telegram_id numbers who should be allowed to edit the menu");
 	console.log("\t                    \t  If mode=edit without this parameter, all users can edit menu");
 	console.log("\t                    \t  You can use \"all\" to all Telegram users can edit the menu (unsafe!)");
+	console.log("\tcust_file           \t  Specifies that the bot should use a customization file (see README.md#Customization)");
+	console.log("\tcustomize.file      \t  Path to the customization file to load (see README.md#Customization)");
 }
