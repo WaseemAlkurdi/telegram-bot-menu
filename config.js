@@ -1,5 +1,8 @@
 var bot = module.parent.exports;
 
+var init   = require('./init.js');
+
+
 function loadConfigurationFile(filename = process.argv[2]){
 	return new Promise(function(ok, fail){
 		if(filename == undefined){
@@ -167,25 +170,48 @@ function getCommandlineParameterValue(requestedParameter){
 function loadCustomizationFile(){
 	return new Promise(function(ok,fail){
 		var filename = getCommandlineParameterValue("cust_file");
+		// the filename can be either "not specified", "empty string", or an actual filename:
 		if (filename == undefined){
-				console.log("Customization file is not specified. Falling back on hardcoded values.");
+				// Tell the user that the customization file wasn't specified, but don't stop.
+				console.log("INFO:","Customization file is not specified. Falling back on hardcoded values.");
 				ok();
-			} else if (filename == ""){
-				fail("Please specify a file path after the equals sign in cust_file= .");
-			} else if (filename != undefined) {
-				console.log("Customization file specified!", filename);
-				bot.fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
-					if (err){
+		} else if (filename == ""){
+			fail("ERROR: Please specify a file path after the equals sign in cust_file= .");
+		} else if (filename != undefined) {
+			console.log("INFO:", "Customization file specified!", filename);
+			bot.fs.exists(filename, function (exists) {
+			if(!exists)
+				fail("ERROR: Customization file \""+filename+"\" doesn't exist, check the path and try again.");
+			});
+			// TODO: Make the program actually stop when failing to find a file.
+			bot.fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
+				if (err){
 					fail(err.toString());
-			    }
-				}, error => {
-					fail(error);
-				});
-			ok();
-			} else {
-				console.log("here!");
+				}
+				// JSON is a blessing.
+				if (JSON.parse(data).token != undefined) {
+					init.TOKEN = JSON.parse(data).token;
+					console.log("Using token:", init.TOKEN);
+				}
+				if (JSON.parse(data).delimiter != undefined) {
+					init.DELIMITER = JSON.parse(data).delimiter;
+					console.log("Using custom delimiter:", init.DELIMITER);
+				}
+				if (JSON.parse(data).start_message != undefined) {
+				init.TOKEN = JSON.parse(data).start_message;
+					console.log("Using custom start message:", init.MSG_START);
+				}
+				// for future customization file generation option --generate-cust-file:
+				/*console.log(JSON.stringify({
+					token: init.TOKEN,
+					delimiter: init.DELIMITER,
+					start_message: init.MSG_START
+				}));*/
 				ok();
-			}
+			}, error => {
+				fail(error);
+			});
+		}
 	});
 }
 module.exports.loadCustomizationFile = loadCustomizationFile;
