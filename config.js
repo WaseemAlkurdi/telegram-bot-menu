@@ -183,6 +183,7 @@ function loadCustomizationFile(){
 			if(!exists)
 				fail("ERROR: Customization file \""+filename+"\" doesn't exist, check the path and try again.");
 			});
+
 			// TODO: Make the program actually stop when failing to find a file.
 			bot.fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
 				if (err){
@@ -191,6 +192,11 @@ function loadCustomizationFile(){
 				// JSON is a blessing.
 				if (JSON.parse(data).token != undefined) {
 					init.TOKEN = JSON.parse(data).token;
+					// note that we're printing the value of the variable that
+					// the program will use, as opposed to the line being read
+					// from the JSON file. This is to let the user (and the dev!)
+					// make sure that the bot is actually succeeding in loading
+					// the value from the file.
 					console.log("Using token:", init.TOKEN);
 				}
 				if (JSON.parse(data).delimiter != undefined) {
@@ -201,11 +207,27 @@ function loadCustomizationFile(){
 				init.TOKEN = JSON.parse(data).start_message;
 					console.log("Using custom start message:", init.MSG_START);
 				}
+				if (JSON.parse(data).proxy != undefined
+					&& (JSON.parse(data).proxy.port != undefined
+						&& JSON.parse(data).proxy.host != undefined)) {
+				init.proxy = JSON.parse(data).proxy;
+				console.log("Using a proxy host:", init.proxy.host);
+				console.log("Using a proxy port:", init.proxy.port);
+				} else if (JSON.parse(data).proxy.host == undefined
+					&& JSON.parse(data).proxy.port != undefined) {
+					fail("ERROR: You have specified a proxy port, but you haven't specified a proxy host. \
+						Please specify one in the customization file \"" + filename + "\".");
+				} else if (JSON.parse(data).proxy.host != undefined
+					&& JSON.parse(data).proxy.port == undefined) {
+					fail("ERROR: You have specified a proxy host, but you haven't specified a proxy port. \
+						Please specify one in the customization file \"" + filename + "\".");
+				}
 				// for future customization file generation option --generate-cust-file:
 				/*console.log(JSON.stringify({
 					token: init.TOKEN,
 					delimiter: init.DELIMITER,
-					start_message: init.MSG_START
+					start_message: init.MSG_START,
+					proxy: init.proxy
 				}));*/
 				ok();
 			}, error => {
