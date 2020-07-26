@@ -36,7 +36,7 @@ config.checkCommandlinePairSanity().then(() => {
 		printSyntax(error);
 	});
 }, hits => {
-	console.log("We've detected errors in your positional arguments:")
+	console.log("ERROR:","We've detected errors in your positional arguments:")
 		for (var j=0 ; j<hits.length ;j++){
 			if (hits[j] != undefined) {
 			console.log(hits[j]);
