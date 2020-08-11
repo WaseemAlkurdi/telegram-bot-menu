@@ -6,7 +6,7 @@ var MODE = 0;
 		0 - default mode with menu
 		1 - edit mode with expand menu
 */
-var TOKEN = '***REMOVED***';
+var TOKEN = ''; // specify this in cust_file! See README.md.
 var DELIMITER = ':::';
 var DATA_FOLDER;
 

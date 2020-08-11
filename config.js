@@ -153,7 +153,8 @@ module.exports.checkCommandlinePairSanity = checkCommandlinePairSanity;
 // on the command line.
 function getCommandlineParameterValue(requestedParameter){
 	for(var i = 0; i < process.argv.length; i++){
-		/*if (process.argv[i].indexOf("--") != -1){
+		/* for future use: if we want to do GNU-style arguments
+		if (process.argv[i].indexOf("--") != -1){
 			console.log("GNU-style argument detected!")
 		}*/
 		var parameter = process.argv[i].split("=")[0];
@@ -190,18 +191,20 @@ function loadCustomizationFile(){
 					fail(err.toString());
 				}
 				// JSON is a blessing.
-				if (JSON.parse(data).token != undefined) {
-					init.TOKEN = JSON.parse(data).token;
+				if (JSON.parse(data).delimiter != undefined) {
 					// note that we're printing the value of the variable that
 					// the program will use, as opposed to the line being read
 					// from the JSON file. This is to let the user (and the dev!)
 					// make sure that the bot is actually succeeding in loading
 					// the value from the file.
-					console.log("Using token:", init.TOKEN);
-				}
-				if (JSON.parse(data).delimiter != undefined) {
 					init.DELIMITER = JSON.parse(data).delimiter;
-					console.log("Using custom delimiter:", init.DELIMITER);
+					console.log("INFO:", "Using custom delimiter:", init.DELIMITER);
+				}
+				if (JSON.parse(data).token != undefined) {
+					init.TOKEN = JSON.parse(data).token;
+					// The token is sensitive data, therefore, we don't print it
+					// to the terminal.
+					console.log("INFO:", "Read token from file");
 				}
 				if (JSON.parse(data).start_message != undefined) {
 				init.TOKEN = JSON.parse(data).start_message;
