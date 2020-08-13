@@ -45,6 +45,19 @@ var MSH_NO_CATALOG		= "WARNING! No parent catalog, error in code"; // see: edit.
 var MSG_ADD_ACTION_REQ	= "Input all actions and click to button \"Save\"";
 var MSG_EDIT_ITEM_CANC	= "Editing canceled";
 
+/*
+	The tags ERROR, INFO, and WARN are color-coded when they are
+	printed to the terminal for convenience. This is achieved
+	using special shell escape sequences which are defined here.
+	Feel free to change them.
+	I have intentionally chosen to not define them in a file,
+	because this isn't something that's frequently changed.
+*/
+
+var MSG_TERM_ERROR_PREFIX =  "\x1b[1m\x1b[31mERROR:\x1b[0m ";
+var MSG_TERM_INFO_PREFIX = "\x1b[1m\x1b[34mINFO:\x1b[0m ";
+var MSG_TERM_WARN_PREFIX = "\x1b[1m\x1b[33mWARN:\x1b[0m ";
+
 /* ---------- BUTTONS ---------- */
 var BUTTON = function(key, _mode){
 	if(key == undefined){
@@ -139,6 +152,10 @@ module.exports.MSG_ADD_ITEM_REQ = MSG_ADD_ITEM_REQ;
 module.exports.MSH_NO_CATALOG = MSH_NO_CATALOG;
 module.exports.MSG_ADD_ACTION_REQ = MSG_ADD_ACTION_REQ;
 module.exports.MSG_EDIT_ITEM_CANC = MSG_EDIT_ITEM_CANC;
+
+module.exports.MSG_TERM_ERROR_PREFIX = MSG_TERM_ERROR_PREFIX;
+module.exports.MSG_TERM_INFO_PREFIX = MSG_TERM_INFO_PREFIX;
+module.exports.MSG_TERM_WARN_PREFIX = MSG_TERM_WARN_PREFIX;
 
 module.exports.BUTTON = BUTTON;
 module.exports.options = options;
