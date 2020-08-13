@@ -22,6 +22,13 @@ var proxy = {
 	'password': ''
 }
 
+var commands = [];
+/*
+	commands - array that stores the user-defined bot commands and
+	their responses	as a string array of stringified JSON.
+	See function start_bot() in bot.js for implementation.
+*/
+
 var MSG_START 			= "Welcome! This is the start message.";
 var MSG_DEFAULT 		= "This is the default message.";
 var MSG_BACK			= function(key){ return "Back to " + key }
@@ -114,6 +121,8 @@ module.exports.menu_root = menu_root;
 module.exports.admins = admins;
 
 module.exports.proxy = proxy;
+
+module.exports.commands = commands;
 
 module.exports.MSG_START = MSG_START;
 module.exports.MSG_DEFAULT = MSG_DEFAULT;

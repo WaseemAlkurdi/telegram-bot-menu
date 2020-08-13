@@ -115,6 +115,25 @@ function start_bot(){
 			bot.sendMessage(msg.from.id, init.MSG_START, init.options(undefined, checkAdmins(msg.from)));
 			return edit.reset_variables(msg.from.id);
 		}
+		/* Import actions from file */
+
+		// loops through the array of commands
+		// if the message that was sent matches a command, (for now) echo back the command.
+		for(var i=0; i<init.commands.length;i++){
+			//bot.on("polling_error",(err)=> console.log(err));
+			console.log(i,"/", init.commands.length, JSON.parse(init.commands[i]).command,
+				msg.text.indexOf(JSON.parse(init.commands[i]).command));
+			if((msg.text.indexOf(JSON.parse(init.commands[i]).command) != -1) && checkAdmins(msg.from) == 1){
+				bot.sendMessage(msg.from.id, "Hello!", init.options(undefined, checkAdmins(msg.from)));
+				return edit.reset_variables(msg.from.id);
+			}
+		}
+
+		for(var i=0; i<init.commands.length;i++){
+			if (cmd.indexOf(("/" + JSON.parse(init.commands[i]).command)) != -1){
+				console.log("Matched:", JSON.parse(init.commands[i]).command);
+			}
+		}
 
 		/* EXPORT from config to data */
 		if(msg.text.indexOf("/export ") == 0 && checkAdmins(msg.from) == 1){
