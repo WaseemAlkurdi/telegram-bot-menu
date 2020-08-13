@@ -226,6 +226,29 @@ function loadCustomizationFile(){
 					        Please specify one in the customization file \"" + filename + "\".");
 					}
 				}
+				if (JSON.parse(data).desync_message != undefined) {
+					init.MSG_DEFAULT = JSON.parse(data).desync_message;
+					console.log("INFO:", "Using custom desync message:", init.MSG_DESYNC);
+				}
+				if (JSON.parse(data).default_message != undefined) {
+					init.MSG_DEFAULT = JSON.parse(data).edit_off_message;
+					console.log("INFO:", "Using custom \"edit mode off\" message:", init.MSG_EDIT_OFF);
+				}
+				if (JSON.parse(data).add_item_req_message != undefined) {
+					init.MSG_ADD_ITEM_REQ = JSON.parse(data).add_item_req_message;
+					console.log("INFO:", "Using custom add item prompt:", init.MSG_ADD_ITEM_REQ);
+				}
+				if (JSON.parse(data).add_action_req_message != undefined) {
+					init.MSG_ACTION_ITEM_REQ = JSON.parse(data).add_item_action_message;
+					console.log("INFO:", "Using custom add action prompt:", init.MSG_ADD_ACTION_REQ);
+				}
+				if (JSON.parse(data).edit_item_canc_message != undefined) {
+					init.MSG_EDIT_ITEM_CANC = JSON.parse(data).edit_item_canc_message;
+					console.log("INFO:", "Using custom \"edit item canceled\" message:", init.MSG_EDIT_ITEM_CANC);
+				}
+				// I intentionally skipped the other variables to keep it simple. Adding them
+				// would be a matter of copying, pasting, and editing one of the if blocks above.
+				
 				// for future customization file generation option --generate-cust-file:
 				/*console.log(JSON.stringify({
 					token: init.TOKEN,
