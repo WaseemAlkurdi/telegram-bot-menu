@@ -323,6 +323,17 @@ function sendActions(bot, msg, _index = 0){
 		bot.sendContact(msg.from.id, phone_name[0], phone_name[1]).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
 			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, error.toString());
 		});
+	} else if(init.menu[msg.text].actions[_index].type == "script"){
+		console.log("init.menu",init.menu);
+		console.log("init.menu[msg.text]",init.menu[msg.text]);
+		console.log("init.menu[msg.text].actions",init.menu[msg.text].actions);
+		console.log("init.menu[msg.text].actions[_index]",init.menu[msg.text].actions[_index]);
+		//bot.sendMessage(msg.from.id, "Executing script:" + , init.options(msg.text, checkAdmins(msg.from))).then(() => { sendActions(bot, msg, _index+1) });
+		bot.exec(init.menu[msg.text].actions, function(error, out, err){
+				if(error != null)
+					fail("Error when add empty string to end of config file: " + error.toString());
+				if(err != "")
+					fail("Error when add empty string to end of config file: " + err.toString());
 	}
 
 	return;
