@@ -174,15 +174,15 @@ function loadCustomizationFile(){
 		// the filename can be either "not specified", "empty string", or an actual filename:
 		if (filename == undefined){
 				// Tell the user that the customization file wasn't specified, but don't stop.
-				console.log("INFO:","Customization file is not specified. Falling back on hardcoded values.");
+				console.log(init.MSG_TERM_INFO_PREFIX,"Customization file is not specified. Falling back on hardcoded values.");
 				ok();
 		} else if (filename == ""){
-			fail("ERROR: Please specify a file path after the equals sign in cust_file= .");
+			fail(init.MSG_TERM_INFO_PREFIX+"Please specify a file path after the equals sign in cust_file= .");
 		} else if (filename != undefined) {
-			console.log("INFO:", "Customization file specified!", filename);
+			console.log(init.MSG_TERM_INFO_PREFIX, "Customization file specified!", filename);
 			bot.fs.exists(filename, function (exists) {
 			if(!exists)
-				fail("ERROR: Customization file \""+filename+"\" doesn't exist, check the path and try again.");
+				fail(init.MSG_TERM_INFO_PREFIX+"Customization file \""+filename+"\" doesn't exist, check the path and try again.");
 			});
 
 			// TODO: Make the program actually stop when failing to find a file.
@@ -198,53 +198,53 @@ function loadCustomizationFile(){
 					// make sure that the bot is actually succeeding in loading
 					// the value from the file.
 					init.DELIMITER = JSON.parse(data).delimiter;
-					console.log("INFO:", "Using custom delimiter:", init.DELIMITER);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom delimiter:", init.DELIMITER);
 				}
 				if (JSON.parse(data).token != undefined) {
 					init.TOKEN = JSON.parse(data).token;
 					// The token is sensitive data, therefore, we don't print it
 					// to the terminal.
-					console.log("INFO:", "Read token from file");
+					console.log(init.MSG_TERM_INFO_PREFIX, "Read token from file");
 				}
 				if (JSON.parse(data).start_message != undefined) {
 					init.MSG_START = JSON.parse(data).start_message;
-					console.log("INFO:", "Using custom start message:", init.MSG_START);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom start message:", init.MSG_START);
 				}
 				if (JSON.parse(data).proxy != undefined){
 					if (JSON.parse(data).proxy.port != undefined
 						&& JSON.parse(data).proxy.host != undefined) {
 							init.proxy = JSON.parse(data).proxy;
-							console.log("INFO:", "Using a proxy host:", init.proxy.host);
-							console.log("INFO:", "Using a proxy port:", init.proxy.port);
+							console.log(init.MSG_TERM_INFO_PREFIX, "Using a proxy host:", init.proxy.host);
+							console.log(init.MSG_TERM_INFO_PREFIX, "Using a proxy port:", init.proxy.port);
 					} else if (JSON.parse(data).proxy.host == undefined
 						&& JSON.parse(data).proxy.port != undefined) {
-						fail("ERROR: You have specified a proxy port, but you haven't specified a proxy host. \
+						fail(init.MSG_TERM_INFO_PREFIX+"You have specified a proxy port, but you haven't specified a proxy host. \
 							Please specify one in the customization file \"" + filename + "\".");
 					} else if (JSON.parse(data).proxy.host != undefined
 						&& JSON.parse(data).proxy.port == undefined) {
-						fail("ERROR: You have specified a proxy host, but you haven't specified a proxy port. \
+						fail(init.MSG_TERM_INFO_PREFIX+"You have specified a proxy host, but you haven't specified a proxy port. \
 					        Please specify one in the customization file \"" + filename + "\".");
 					}
 				}
 				if (JSON.parse(data).desync_message != undefined) {
 					init.MSG_DEFAULT = JSON.parse(data).desync_message;
-					console.log("INFO:", "Using custom desync message:", init.MSG_DESYNC);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom desync message:", init.MSG_DESYNC);
 				}
 				if (JSON.parse(data).default_message != undefined) {
 					init.MSG_DEFAULT = JSON.parse(data).edit_off_message;
-					console.log("INFO:", "Using custom \"edit mode off\" message:", init.MSG_EDIT_OFF);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom \"edit mode off\" message:", init.MSG_EDIT_OFF);
 				}
 				if (JSON.parse(data).add_item_req_message != undefined) {
 					init.MSG_ADD_ITEM_REQ = JSON.parse(data).add_item_req_message;
-					console.log("INFO:", "Using custom add item prompt:", init.MSG_ADD_ITEM_REQ);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom add item prompt:", init.MSG_ADD_ITEM_REQ);
 				}
 				if (JSON.parse(data).add_action_req_message != undefined) {
 					init.MSG_ACTION_ITEM_REQ = JSON.parse(data).add_item_action_message;
-					console.log("INFO:", "Using custom add action prompt:", init.MSG_ADD_ACTION_REQ);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom add action prompt:", init.MSG_ADD_ACTION_REQ);
 				}
 				if (JSON.parse(data).edit_item_canc_message != undefined) {
 					init.MSG_EDIT_ITEM_CANC = JSON.parse(data).edit_item_canc_message;
-					console.log("INFO:", "Using custom \"edit item canceled\" message:", init.MSG_EDIT_ITEM_CANC);
+					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom \"edit item canceled\" message:", init.MSG_EDIT_ITEM_CANC);
 				}
 				// I intentionally skipped the other variables to keep it simple. Adding them
 				// would be a matter of copying, pasting, and editing one of the if blocks above.

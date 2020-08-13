@@ -36,7 +36,7 @@ config.checkCommandlinePairSanity().then(() => {
 		printSyntax(error);
 	});
 }, hits => {
-	console.log("ERROR:","We've detected errors in your positional arguments:")
+	console.log(init.MSG_TERM_ERROR_PREFIX,"We've detected errors in your positional arguments:")
 		for (var j=0 ; j<hits.length ;j++){
 			if (hits[j] != undefined) {
 			console.log(hits[j]);
@@ -283,45 +283,45 @@ function sendActions(bot, msg, _index = 0){
 		bot.sendMessage(msg.from.id, content, init.options(msg.text, checkAdmins(msg.from))).then(() => { sendActions(bot, msg, _index+1) });
 	} else if(init.menu[msg.text].actions[_index].type == "photo"){
 		bot.sendPhoto(msg.from.id, content).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "voice"){
 		bot.sendVoice(msg.from.id, content).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "sticker"){
 		bot.sendSticker(msg.from.id, content).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "video"){
 		bot.sendVideo(msg.from.id, content).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "location"){
 		var longitude_latitude = content.split('_');
 		if(longitude_latitude.length < 2){
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, "BED FORMAT");
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, "BED FORMAT");
 			sendActions(bot, msg, _index+1);
 			return;
 		}
 
 		bot.sendLocation(msg.from.id, longitude_latitude[0], longitude_latitude[1]).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "document"){
 		bot.sendDocument(msg.from.id, content).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, error.toString());
 		});
 	} else if(init.menu[msg.text].actions[_index].type == "contact"){
 		var phone_name = content.split('_');
 		if(phone_name.length < 2){
-			console.log("ERROR:", "sendActions", msg.text, init.menu[msg.text].actions[_index].type, "BED FORMAT");
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, init.menu[msg.text].actions[_index].type, "BED FORMAT");
 			sendActions(bot, msg, _index+1);
 			return;
 		}
 
 		bot.sendContact(msg.from.id, phone_name[0], phone_name[1]).then(() => { sendActions(bot, msg, _index+1) }).catch(error => {
-			console.log("ERROR:", "sendActions", msg.text, error.toString());
+			console.log(init.MSG_TERM_ERROR_PREFIX, "sendActions", msg.text, error.toString());
 		});
 	}
 
