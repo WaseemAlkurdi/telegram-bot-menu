@@ -301,7 +301,10 @@ module.exports.checkMode = checkMode;
 
 function getAdmins(){
 	var admins = [];
-	if(process.argv[5] != undefined && process.argv[4] != "all"){
+	// if the argument after "edit" isn't absent AND isn't "all" AND isn't "cust_file", add to admin list after
+	// trimming the @
+	if(process.argv[5] != undefined &&
+		process.argv[5] != "all" && process.argv[5].indexOf("cust_file") == -1){
 		admins = process.argv[5].split(",");
 		for(var i = 0; i < admins.length; i++){
 			if(admins[i][0] == "@")
