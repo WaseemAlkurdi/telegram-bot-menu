@@ -177,12 +177,12 @@ function loadCustomizationFile(){
 				console.log(init.MSG_TERM_INFO_PREFIX,"Customization file is not specified. Falling back on hardcoded values.");
 				ok();
 		} else if (filename == ""){
-			fail(init.MSG_TERM_INFO_PREFIX+"Please specify a file path after the equals sign in cust_file= .");
+			fail(init.MSG_TERM_ERROR_PREFIX+"Please specify a file path after the equals sign in cust_file= .");
 		} else if (filename != undefined) {
 			console.log(init.MSG_TERM_INFO_PREFIX, "Customization file specified!", filename);
 			bot.fs.exists(filename, function (exists) {
 			if(!exists)
-				fail(init.MSG_TERM_INFO_PREFIX+"Customization file \""+filename+"\" doesn't exist, check the path and try again.");
+				fail(init.MSG_TERM_ERROR_PREFIX+"Customization file \""+filename+"\" doesn't exist, check the path and try again.");
 			});
 
 			// TODO: Make the program actually stop when failing to find a file.
@@ -190,6 +190,7 @@ function loadCustomizationFile(){
 				if (err){
 					fail(err.toString());
 				}
+				console.log(init.MSG_TERM_INFO_PREFIX,"Reading values from customization file:");
 				// JSON is a blessing.
 				if (JSON.parse(data).delimiter != undefined) {
 					// note that we're printing the value of the variable that
@@ -218,11 +219,11 @@ function loadCustomizationFile(){
 							console.log(init.MSG_TERM_INFO_PREFIX, "Using a proxy port:", init.proxy.port);
 					} else if (JSON.parse(data).proxy.host == undefined
 						&& JSON.parse(data).proxy.port != undefined) {
-						fail(init.MSG_TERM_INFO_PREFIX+"You have specified a proxy port, but you haven't specified a proxy host. \
+						fail(init.MSG_TERM_ERROR_PREFIX+"You have specified a proxy port, but you haven't specified a proxy host. \
 							Please specify one in the customization file \"" + filename + "\".");
 					} else if (JSON.parse(data).proxy.host != undefined
 						&& JSON.parse(data).proxy.port == undefined) {
-						fail(init.MSG_TERM_INFO_PREFIX+"You have specified a proxy host, but you haven't specified a proxy port. \
+						fail(init.MSG_TERM_ERROR_PREFIX+"You have specified a proxy host, but you haven't specified a proxy port. \
 					        Please specify one in the customization file \"" + filename + "\".");
 					}
 				}

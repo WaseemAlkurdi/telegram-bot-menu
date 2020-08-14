@@ -29,14 +29,14 @@ function generateNewFile(impex, telegram, filename, msg){
 				indexActions(impex, telegram, config, item, bot.init.menu[item].actions, msg).then(new_config => {
 					bot.exec("echo \"" + new_config.replace(/"/g, "\\\"") + "\" >> " + filename + "\n", function(error, out, err){
 						if(error != null)
-							console.log(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, "add string to impex file["+impex+"]: " + error.toString());
+							console.error(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, "add string to impex file["+impex+"]: " + error.toString());
 						if(err != "")
-							console.log(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, "add string to impex file["+impex+"]: " + err.toString());
+							console.error(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, "add string to impex file["+impex+"]: " + err.toString());
 
 						finished_loops++;
 					});
 				}, error => {
-					console.log(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, error.item, error.msg);
+					console.error(init.MSG_TERM_ERROR_PREFIX, "impex="+impex, error.item, error.msg);
 				});
 			}
 		}
@@ -139,9 +139,9 @@ function indexActions(impex, telegram, config, item, actions, msg, index = 0){
 function clearFile(filename){
 	bot.exec("cat /dev/null > " + filename + "\n", function(error, out, err){
 		if(error != null)
-			console.log(init.MSG_TERM_ERROR_PREFIX, filename, "clear file: " + error.toString());
+			console.error(init.MSG_TERM_ERROR_PREFIX, filename, "clear file: " + error.toString());
 		if(err != "")
-			console.log(init.MSG_TERM_ERROR_PREFIX, filename, "clear file: " + err.toString());
+			console.error(init.MSG_TERM_ERROR_PREFIX, filename, "clear file: " + err.toString());
 	});
 }
 
@@ -161,12 +161,12 @@ function import_configuration(telegram, filename_from, msg){
 			// refresh menu with new config
 			bot.init.menu = {};
 			bot.config.loadConfigurationFile(filename_to).then(() => { }, error => {
-				console.log(init.MSG_TERM_ERROR_PREFIX, "import", "loadConfigurationFile", filename_to, error);
+				console.error(init.MSG_TERM_ERROR_PREFIX, "import", "loadConfigurationFile", filename_to, error);
 			});		
 		});
 
 	}, error => {
-		console.log(init.MSG_TERM_ERROR_PREFIX, "import", "loadConfigurationFile", filename_from, error);
+		console.error(init.MSG_TERM_ERROR_PREFIX, "import", "loadConfigurationFile", filename_from, error);
 	});
 }
 module.exports.import_configuration = import_configuration
