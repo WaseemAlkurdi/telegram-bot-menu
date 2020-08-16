@@ -7,9 +7,11 @@ const Agent 	= require('socks5-https-client/lib/Agent')
 var emoji = require('node-emoji');
 var fs	  = require('fs');
 var exec  = require('child_process').exec;
+var https = require('https');
 module.exports.fs = fs;
 module.exports.emoji = emoji;
 module.exports.exec = exec;
+module.exports.https = https;
 
 var init   = require('./init.js');
 var config = require('./config.js');

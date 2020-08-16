@@ -55,8 +55,8 @@ var MSG_EDIT_ITEM_CANC	= "Editing canceled";
 */
 
 var MSG_TERM_ERROR_PREFIX =  "\x1b[1m\x1b[31mERROR:\x1b[0m ";
-var MSG_TERM_INFO_PREFIX = "\x1b[1m\x1b[34mINFO:\x1b[0m ";
-var MSG_TERM_WARN_PREFIX = "\x1b[1m\x1b[33mWARN:\x1b[0m ";
+var MSG_TERM_INFO_PREFIX = "\x1b[1m\x1b[34mINFO:\x1b[0m  ";
+var MSG_TERM_WARN_PREFIX = "\x1b[1m\x1b[33mWARN:\x1b[0m  ";
 
 /* ---------- BUTTONS ---------- */
 var BUTTON = function(key, _mode){
