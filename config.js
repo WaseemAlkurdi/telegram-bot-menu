@@ -3,6 +3,12 @@ var bot = module.parent.exports;
 var init   = require('./init.js');
 require('dotenv').config();
 
+// if there is a BOT_TOKEN on the commandline that's not empty ...
+if (process.env.BOT_TOKEN != undefined && process.env.BOT_TOKEN.trim() != ""){
+	// ... read it to init.TOKEN:
+	init.TOKEN = process.env.BOT_TOKEN;
+	console.log(init.MSG_TERM_INFO_PREFIX, "Read token from environment");
+}
 
 function loadConfigurationFile(filename = process.argv[2]){
 	return new Promise(function(ok, fail){
@@ -202,7 +208,7 @@ function loadCustomizationFile(){
 					init.DELIMITER = JSON.parse(data).delimiter;
 					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom delimiter:", init.DELIMITER);
 				}
-				if (JSON.parse(data).token != undefined) {
+				if (init.TOKEN == undefined && JSON.parse(data).token != undefined) {
 					init.TOKEN = JSON.parse(data).token;
 					// The token is sensitive data, therefore, we don't print it
 					// to the terminal.
