@@ -1,6 +1,7 @@
 var bot = module.parent.exports;
 
 var init   = require('./init.js');
+require('dotenv').config();
 
 
 function loadConfigurationFile(filename = process.argv[2]){
