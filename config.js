@@ -309,9 +309,22 @@ module.exports.checkMode = checkMode;
 
 function getAdmins(){
 	var admins = [];
-	// if the argument after "edit" isn't absent AND isn't "all" AND isn't "cust_file", add to admin list after
-	// trimming the @
-	if(process.argv[5] != undefined &&
+	// first, try reading admin names from the environment:
+	if (process.env.BOT_ADMINS != undefined && process.env.BOT_ADMINS.trim() != ""){
+		admins = process.env.BOT_ADMINS.split(",");
+		for(var i = 0; i < admins.length; i++){
+			if(admins[i][0] == "@") {
+				admins[i] = admins[i].slice(1);
+			}
+		}
+	}
+
+	// then, if no admin names were read from the environment, read from the
+	// command line:
+
+	// if the argument after "edit" isn't absent AND isn't "all" AND isn't
+	// "cust_file", add to admin list after trimming the @
+	if(admins == "" && process.argv[5] != undefined &&
 		process.argv[5] != "all" && process.argv[5].indexOf("cust_file") == -1){
 		admins = process.argv[5].split(",");
 		for(var i = 0; i < admins.length; i++){
