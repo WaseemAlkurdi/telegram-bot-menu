@@ -166,62 +166,12 @@ function getCommandlineParameterValue(requestedParameter){
 	}
 }
 
-/*
-	This function loads user configuration from what I call the "customization
-	file", first from a URL specified in an environment variable, then from
-	disk. This would allow the user to change the delimiter, default prompts
-	, and so forth, as zZoMROT envisaged in their original "to-do" list.
-
-	The choice of "customization file" instead of "configuration file" is
-	to avoid ambiguity, as the menu file could equally be thought of as a
-	"configuration file", and to better reflect the purpose of customization
-	that this file exists chiefly for.
-
-	You might ask about the support for fetching a customization file from
-	a remote location. This is done solely to use Heroku's "config var"
-	system for Heroku deployments.
-*/
+// This function loads what I called the "customization file". This file
+// would allow the user to change the delimiter, default prompts, and so
+// forth, as zZoMROT envisaged in their original "to-do" list.
 function loadCustomizationFile(){
-	var loaded_from_url = false;
-
-	if (process.env.BOT_CUST_URL != undefined && process.env.BOT_CUST_URL.trim() != ""){
-		console.log(init.MSG_TERM_INFO_PREFIX,"Customization file URL specified ... attempting download.");
-		bot.https.get(process.env.BOT_CUST_URL, (resp) => {
-			console.log(init.MSG_TERM_INFO_PREFIX,"Downloading ...");
-			let data = '';
-			resp.on('data', (chunk) => {
-				data += chunk;
-			});
-			resp.on('end',() => {
-				console.log(init.MSG_TERM_INFO_PREFIX,"Customization file downloaded ... reading file:");
-				try {
-					var downloaded = console.log(JSON.parse(data));
-				} catch (e) {
-				   console.error(init.MSG_TERM_ERROR_PREFIX,"Invalid configuration file syntax ... make sure this is a direct link to the customization file!");
-				}
-				bot.fs.writeFile("downloaded_cust_file", downloaded, err => {
-					if (err) console.error(init.MSG_TERM_ERROR_PREFIX, "Failed to write downloaded customization file to disk!", err.message);
-					else {
-						console.log(init.MSG_TERM_INFO_PREFIX,"Wrote downloaded customization file to disk.");
-						loaded_from_url = true;
-					}
-				})
-			});
-		}).on("error", err => {
-			console.error(init.MSG_TERM_ERROR_PREFIX, error.message);
-		});
-	}
 	return new Promise(function(ok,fail){
-		// if there's a downloaded customization file, then it takes precedence over the local file.
-		var filename = "";
-		if (loaded_from_url) {
-			filename = "downloaded_cust_file";
-			console.log(init.MSG_TERM_INFO_PREFIX,"Downloaded customization file will take precedence over local file.")
-		}
-		else {
-			filename = getCommandlineParameterValue("cust_file");
-		}
-
+		var filename = getCommandlineParameterValue("cust_file");
 		// the filename can be either "not specified", "empty string", or an actual filename:
 		if (filename == undefined){
 				// Tell the user that the customization file wasn't specified, but don't stop.
@@ -241,8 +191,7 @@ function loadCustomizationFile(){
 				if (err){
 					fail(err.toString());
 				}
-				console.log(init.MSG_TERM_INFO_PREFIX,"Reading values from customization file");
-				loaded_from_file = true;
+				console.log(init.MSG_TERM_INFO_PREFIX,"Reading values from customization file:");
 				// JSON is a blessing.
 				if (JSON.parse(data).delimiter != undefined) {
 					// note that we're printing the value of the variable that
@@ -253,20 +202,12 @@ function loadCustomizationFile(){
 					init.DELIMITER = JSON.parse(data).delimiter;
 					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom delimiter:", init.DELIMITER);
 				}
-
-				// try reading token from environment. If a value doesn't get assigned, then
-				// it's obvious that there isn't a value in the environment, so we would read the file.
-
-				init.TOKEN = process.env.BOT_TOKEN;
-				if (!init.TOKEN) {
-					if (JSON.parse(data).token != undefined) {
-						init.TOKEN = JSON.parse(data).token;
-						// The token is sensitive data, therefore, we don't print it
-						// to the terminal.
-						console.log(init.MSG_TERM_INFO_PREFIX, "Read token from file");
-					}
-				} else console.log(init.MSG_TERM_INFO_PREFIX, "Read token from commandline");
-
+				if (JSON.parse(data).token != undefined) {
+					init.TOKEN = JSON.parse(data).token;
+					// The token is sensitive data, therefore, we don't print it
+					// to the terminal.
+					console.log(init.MSG_TERM_INFO_PREFIX, "Read token from file");
+				}
 				if (JSON.parse(data).start_message != undefined) {
 					init.MSG_START = JSON.parse(data).start_message;
 					console.log(init.MSG_TERM_INFO_PREFIX, "Using custom start message:", init.MSG_START);
