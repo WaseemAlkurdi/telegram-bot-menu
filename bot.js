@@ -49,7 +49,6 @@ config.checkCommandlinePairSanity().then(() => {
 
 
 function start_bot(){
-	console.log(process.env);
 	var bot = new TelegramBot(init.TOKEN, {
 		polling: true, 
 		// request: {
